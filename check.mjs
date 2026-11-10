@@ -21,6 +21,9 @@ class Element {
 const html = fs.readFileSync(new URL('dist/index.html', import.meta.url), 'utf8');
 const sections = [...html.matchAll(/<section\b[\s\S]*?<\/section>/g)].map(match => match[0]);
 assert.equal(sections.length, 14);
+sections.forEach((section, index) => assert.match(section, new RegExp('class="slide-number" aria-hidden="true">' + (index + 1) + '</span>')));
+assert.match(sections[4], /class="insulin-scene photo-animation"/);
+assert.match(sections[6], /class="petase-scene photo-animation"/);
 assert.equal((html.match(/<img[^>]+src="assets\/kaznu-emblem.png"/g) || []).length, 1);
 assert.match(sections[0], /assets\/kaznu-emblem.png/);
 assert.ok(!/<footer|<svg|<dialog/.test(html));
