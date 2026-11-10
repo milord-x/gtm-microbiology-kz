@@ -28,6 +28,10 @@ assert.equal((html.match(/<img[^>]+src="assets\/kaznu-emblem.png"/g) || []).leng
 assert.match(sections[0], /assets\/kaznu-emblem.png/);
 assert.ok(!/<footer|<svg|<dialog/.test(html));
 assert.match(sections[6], /Мақаланы ашу/);
+assert.match(sections[6], /Ғылыми жұмыс: мақсат пен әдіс/);
+assert.match(sections[7], /Ғылыми жұмыс: нәтиже мен баға/);
+assert.match(sections[8], /bio-animation/);
+assert.ok(!/ChatGPT|data-title="Биоқауіпсіздік"/.test(html));
 assert.match(sections[13], /Шығаева.*Жұбанова.*Lu H\./s);
 const elements = Object.fromEntries(['deck', 'announcement', 'bio-pause', 'bio-animation'].map(id => [id, new Element()]));
 const slides = sections.map(section => {
