@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 
 class Element {
   constructor(tagName = 'DIV') {
@@ -19,6 +20,11 @@ class Element {
   click() { this.listeners.click({currentTarget:this}); }
 }
 const html = fs.readFileSync(new URL('dist/index.html', import.meta.url), 'utf8');
+for (const name of ['style.css', 'deck.js']) {
+  const bytes = fs.readFileSync(new URL(`dist/${name}`, import.meta.url));
+  const version = createHash('sha256').update(bytes).digest('hex').slice(0, 12);
+  assert.ok(html.includes(`${name}?v=${version}`), `Run node scripts/version-assets.mjs for ${name}`);
+}
 const sections = [...html.matchAll(/<section\b[\s\S]*?<\/section>/g)].map(match => match[0]);
 assert.equal(sections.length, 14);
 sections.forEach((section, index) => assert.match(section, new RegExp('class="slide-number" aria-hidden="true">' + (index + 1) + '</span>')));

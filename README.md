@@ -12,6 +12,8 @@
 
 Оба видео — по 28 секунд, без звука. Пересборка: `python scripts/make_videos.py`, требуется FFmpeg. Проверка логики: `node check.mjs`.
 
+Перед публикацией: `node scripts/version-assets.mjs`, затем `node check.mjs`. Адреса CSS и JS включают хеш содержимого, чтобы браузер получал совместимые версии файлов.
+
 GitHub Pages обслуживает ветку `gh-pages`. Обновление: `git subtree push --prefix=dist origin gh-pages`.
 
 Проверка реального браузерного отображения недоступна: browser host mcp__cua_repl не подключён.
